@@ -1,4 +1,5 @@
 import {
+    createSelector,
     createSlice,
     PayloadAction,
 } from '@reduxjs/toolkit';
@@ -23,15 +24,23 @@ export const counterSlice = createSlice({
         decrement: (state) => {
             state.value -= 1
         },
-        // пример с payload
+        /** пример с payload */
         incrementByAmount: (state, action: PayloadAction<number>) => {
             state.value += action.payload
         },
     },
 })
 
+/**
+ * Actions
+ * */
 export const { increment, decrement, incrementByAmount } = counterSlice.actions
 
-export const selectCount = (state: RootState) => state.counter.value
+/**
+ * Selectors
+ * */
+// export const selectCount = (state: RootState) => state.counter.value
+const RootSelector = (state: RootState) => state.counter;
+export const selectCount = createSelector(RootSelector, (state) => state.value)
 
 export default counterSlice.reducer
